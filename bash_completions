@@ -1,0 +1,20 @@
+# ALEX'S BASH COMPLETIONS
+
+__complete_git_branch() {
+    local branches=($(__git_branch_show_others))
+    SUGGESTIONS="${branches[@]//remotes\/origin\//}"
+    COMPREPLY=($(compgen -W "$SUGGESTIONS" "${COMP_WORDS[1]}"))
+}
+
+__complete_ssh_host() {
+    local hosts=($(__ssh_list_known_hosts))
+    SUGGESTIONS="${hosts[@]}"
+    COMPREPLY=($(compgen -W "$SUGGESTIONS" "${COMP_WORDS[1]}"))
+}
+
+# git
+complete -F __complete_git_branch g.b
+complete -F __complete_git_branch g.m
+
+# ssh
+complete -F __complete_ssh_host ssh
